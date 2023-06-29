@@ -1,13 +1,14 @@
 import "./Detalle.css";
 import BotonFavorito from "../componentes/botones/boton-favorito.componente";
 import TarjetaEpisodio from "../componentes/episodios/tarjeta-episodio.componente";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import {  useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import  { charactersList } from "../componentes/interfaces/characters";
 import { Link } from "react-router-dom";
 import { getEpisodesByCharacter } from "../features/characters/episodesService";
 import { episodesList } from "../componentes/interfaces/episodes";
+import { addFavorite, deleteFavorite } from "../features/characters/charactersSlice";
 
 /**
  * Esta es la pagina de detalle. Aqui se puede mostrar la vista sobre el personaje seleccionado junto con la lista de episodios en los que aparece
@@ -22,13 +23,15 @@ import { episodesList } from "../componentes/interfaces/episodes";
  * @returns la pagina de detalle
  */
 const PaginaDetalle: FC = () => {
+    const favorites = useSelector((state: RootState)  => state.characters.favorites)
+    const [fav, setFav] = useState(false)
 
     const dispatch: AppDispatch = useDispatch()
     const stateCharacters: charactersList = useSelector((state:RootState)=>{ return state.characters})
     const selectedCharacter = stateCharacters.selected
 
     const stateEpisodes: episodesList = useSelector((state: RootState)=>state.episodes)
-
+    const id = selectedCharacter.id
     const episodesIds = selectedCharacter.episode.map((e)=> e.substring(40))
 
 useEffect(() => {
@@ -38,6 +41,11 @@ if (episodesIds.length > 0) {
 console.log(stateCharacters.selected);
 
 }, [selectedCharacter])
+
+useEffect(() => {
+    setFav(favorites.includes(id))
+
+  }, [favorites])
 
     return (
         
@@ -55,9 +63,14 @@ console.log(stateCharacters.selected);
                     <p>{selectedCharacter.name}</p>
                     <p>Planeta: {selectedCharacter.origin.name}</p>
                     <p>Genero: {selectedCharacter.gender}</p>
-                    <p>id: {selectedCharacter.id}</p>
+                    <p>id: {id}</p>
                 </div>
-                <BotonFavorito onClick={()=>{}} esFavorito={false} />
+                <BotonFavorito onClick={()=>{
+                if (fav) {
+                    dispatch(deleteFavorite(id))
+                }else{dispatch(addFavorite(id))}}}
+
+                esFavorito={fav} />
             </div>
         </div>
         <h4>Lista de episodios donde apareció el personaje</h4>
