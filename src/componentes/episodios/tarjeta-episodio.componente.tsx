@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import './tarjeta-episodio.css';
 
 /**
@@ -8,13 +9,13 @@ import './tarjeta-episodio.css';
  * 
  * @returns un JSX element 
  */
-const TarjetaEpisodio = () => {
+const TarjetaEpisodio:FC<{name:string,episode:string,date:string}> = ({name,episode,date}) => {
 
     return <div className="tarjeta-episodio">
-            <h4>Close Rick-counters of the Rick Kind</h4>
+            <h4>{name}</h4>
             <div>
-                <span>S01E01</span>
-                <span>Lanzado el: April 7, 2014</span>
+                <span>{episode}</span>
+                <span>{date}</span>
             </div>
     </div>
 }

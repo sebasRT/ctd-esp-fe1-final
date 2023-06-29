@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import './encabezado.css';
+import { FC } from "react";
 
 /**
  * Encabezado que contiene los links para navegar entre las páginas
@@ -8,7 +9,7 @@ import './encabezado.css';
  *
  * @returns {JSX.Element}
  */
-const Encabezado = () => {
+const Encabezado: FC = () => {
 
     return <header>
             <div>
