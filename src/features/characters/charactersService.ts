@@ -1,6 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import character from "../../componentes/interfaces/characters";
 
+/**
+ * obtiene todos los personajes de la API
+ */
 export const getAllCharacters = createAsyncThunk('character/all',async ()=>{
     const response = await fetch(`https://rickandmortyapi.com/api/character`)
 
@@ -19,7 +22,9 @@ export const getAllCharacters = createAsyncThunk('character/all',async ()=>{
 })
 
 
-
+/**
+ * devuelve los personajes filtrados por String
+ */
 export const filterCharacterByName = createAsyncThunk('character/filtered', async (name: string) => {
   
         const response = await fetch(`https://rickandmortyapi.com/api/character/?name=${name}`)
@@ -38,7 +43,9 @@ export const filterCharacterByName = createAsyncThunk('character/filtered', asyn
 
 
 
-
+/**
+ * devuelve los personajes de la pagina seleccionada
+ */
 export const changePage = createAsyncThunk('character/filtered/page', async (page: string | null) => {
     if (typeof page === 'string') {
        
@@ -52,7 +59,10 @@ export const changePage = createAsyncThunk('character/filtered/page', async (pag
 })
 
 
-
+/**
+ * devuelve un array con los datos de los personajes favoritos y en caso no haber niguno devuelve un array vacio
+ * @param favorites recibe un array con los ids de los personajes favoritos
+ */
 export const getAllFavorites = createAsyncThunk('character/filtered/favorites',async (favorites: number[]) => {
 
         const characters = await fetch(`https://rickandmortyapi.com/api/character/${favorites}`)        
@@ -64,10 +74,11 @@ export const getAllFavorites = createAsyncThunk('character/filtered/favorites',a
 
   
 })
+
 /**
  * @async
  * @param id requiere el ID del personaje seleccionado
- * @example dispatch(getSelected(1))
+ * @returns los datos del personaje seleccionado
  */
 export const getSelected = createAsyncThunk('character/selected', async(id: number)=>{
     

@@ -26,8 +26,6 @@ const PaginaFavoritos: FC = () => {
         <div className="actions">
             <h3>Personajes Favoritos</h3>
             <button className="danger" onClick={()=>{
-                console.log("done");
-                
                 dispatch(deleteAllFavorites())
             }}>Eliminar Todos</button>
         </div>

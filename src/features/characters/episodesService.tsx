@@ -1,10 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import episode from "../../componentes/interfaces/episodes";
 
-export const getEpisodesByCharacter = createAsyncThunk('episode/character', async(episodesIds:string)=>{
-    
+/**
+ * obtiene la informacion de todos los episodios de acuerdo al personaje seleccionado
+ */
+export const getEpisodesByCharacter = createAsyncThunk('episode/character', async(episodesIds:string)=>{    
+
     const response = await fetch(`https://rickandmortyapi.com/api/episode/${episodesIds}`)
     if (response.ok) {
-        return response.json()
+        if (episodesIds.includes(",")) {
+            return response.json()
+        }else{
+            return [await response.json()]
+        }
     }
 })

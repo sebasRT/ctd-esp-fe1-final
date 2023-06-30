@@ -38,7 +38,6 @@ useEffect(() => {
 if (episodesIds.length > 0) {
     dispatch(getEpisodesByCharacter(episodesIds.join(',')))
 }  
-console.log(stateCharacters.selected);
 
 }, [selectedCharacter])
 
